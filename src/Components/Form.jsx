@@ -27,7 +27,7 @@ const Boton = styled.input`
 
 
 `
-const Form = () => {
+const Form = ({getMoneda, getCripto}) => {
 
     const [listaCripto, getListaCripto] = useState([]);
     const [error, getError] = useState(false);
@@ -41,9 +41,9 @@ const Form = () => {
 
 
     // utilisamos el useMoneda
-    const [moneda, SelectMoneda] = useMoneda('Elige tu moneda', '',MONEDAS);
+    const [monedas, SelectMoneda] = useMoneda('Elige tu moneda', '',MONEDAS);
     // utilisamos el useCripto
-    const [cripto, SelecCripto] = useCripto('Elige la cripto moneda', '', listaCripto);
+    const [criptos, SelecCripto] = useCripto('Elige la cripto moneda', '', listaCripto);
 
     // llamado api
     useEffect(() =>{
@@ -61,11 +61,15 @@ const Form = () => {
         const handelSubmit = e =>{
                 e.preventDefault();
 
-                if(moneda === '' || cripto === ''){
+                if(monedas === '' || criptos === ''){
                     getError(true)
                     return;
                 }
-                getError(false)
+                getError(false);
+
+                getMoneda(monedas);
+                getCripto(criptos);
+
 
             }
 
